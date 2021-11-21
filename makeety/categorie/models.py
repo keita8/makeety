@@ -7,7 +7,7 @@ class Category(models.Model):
 	category_name = models.CharField(max_length=70, verbose_name='Nom de la categorie', unique=True)
 	slug = models.SlugField(max_length=70, unique=True)
 	description = models.TextField(max_length=300)
-	categories_image = models.ImageField(upload_to='photos/categorie', blank=True, verbose_name='image')
+	categories_image = models.ImageField(upload_to='photos/categorie', blank=True,verbose_name='image')
 
 	class Meta:
 		verbose_name = 'categorie'
