@@ -15,6 +15,14 @@ a:hover {
   text-decoration: none;
 }
 
+.active a{
+  background: blueviolet;
+}
+
+.active a:active {
+  color: blueviolet;
+}
+
 .img-wrap {
   text-align: center;
   display: block;

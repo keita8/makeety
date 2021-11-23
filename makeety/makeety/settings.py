@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'phonenumber_field',
+     'phonenumbers',
     'categorie',
     'accounts',
     'store',
@@ -142,4 +144,27 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
+# PHONENUMBER_DEFAULT_REGION = 'GN'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+
+}
+
+LOGOUT_REDIRECT_URL = 'accounts:login'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'homepage'
+
+
+# Configuration d'smtp server
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ansoumanekeita825@gmail.com'
+DEFAULT_FROM_EMAIL = 'ansoumanekeita825@gmail.com'
+EMAIL_HOST_PASSWORD = 'vucjon-bavrY8-kovbuw'
+EMAIL_USE_TLS = True
 
