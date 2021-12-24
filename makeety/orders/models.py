@@ -27,7 +27,7 @@ class Order(models.Model):
 		('Annulée', 'Annulée'),
 	)
 
-	user           = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+	user           = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, verbose_name="Utilisateur")
 	payment        = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Paiement")
 	order_number   = models.CharField(max_length=20, verbose_name="Numero de la commande")
 	first_name     = models.CharField(max_length=50, verbose_name="Prenom")
@@ -42,7 +42,7 @@ class Order(models.Model):
 	order_note     = models.CharField(max_length=200, blank=True, verbose_name="Note de la commande")
 	order_total    = models.FloatField(verbose_name="Commande totale")
 	tax            = models.FloatField(verbose_name="Taxe")
-	status         = models.CharField(max_length=20, choices=STATUS, default="Nouveau")
+	status         = models.CharField(max_length=20, choices=STATUS, default="Nouvelle")
 	ip             = models.CharField(max_length=10, blank=True)
 	is_ordered     = models.BooleanField(default=False, verbose_name='Commande deja effectuée ?')
 	created_at     = models.DateTimeField(auto_now_add=True, verbose_name="Crée le")
@@ -55,7 +55,7 @@ class Order(models.Model):
 
 
 	def __str__(self):
-		return self.first_name
+		return self.first_name + self.last_name + self.user
 
 class OrderProduct(models.Model):
 	user           = models.ForeignKey(Account, on_delete=models.CASCADE)

@@ -40,8 +40,6 @@ def place_orders(request, total=0, quantity=0):
 			# stocker toutes les informations sur la facturation dans un tableau de type commande
 			data = Order()
 			data.user           = current_user
-
-
 			data.first_name     = form.cleaned_data['first_name']
 			data.last_name      = form.cleaned_data['last_name']
 			data.phone          = form.cleaned_data['phone']
