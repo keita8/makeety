@@ -1,53 +1,316 @@
-{% extends "base/base.html" %} {% load static %} {% block title %} Accueil {% endblock title %} {% block content %}
+{% extends "base/base.html" %}
+{% load static %}
+{% load humanize %}
 
-<!-- ========================= SECTION MAIN ========================= -->
-<section class="section-intro padding-y-sm">
-    <div class="container">
+{% block title %}
+    Accueil
+{% endblock title %}
 
-        <div class="intro-banner-wrap">
-            <img src="{% static 'images/banners/cover.jpg' %}" class="img-fluid rounded">
+
+{% block content %}
+
+{% include "base/mainsection.html" %}
+    
+
+<div class="container">
+
+
+<!-- =============== SECTION DEAL =============== -->
+<section class="padding-bottom">
+ <div class="card card-deal">
+     <div class="col-heading content-body">
+      <header class="section-heading">
+       <h3 class="section-title">Promotion</h3>
+       <p>Hygiene equipments</p>
+     </header><!-- sect-heading -->
+     <div class="timer">
+       <div> <span class="num">04</span> <small>Jours</small></div>
+       <div> <span class="num">12</span> <small>Heures</small></div>
+       <div> <span class="num">58</span> <small>Minutes</small></div>
+       <div> <span class="num">02</span> <small>Secondes</small></div>
+     </div>
+   </div> <!-- col.// -->
+   <div class="row no-gutters items-wrap">
+    <div class="col-md col-6">
+     <figure class="card-product-grid card-sm">
+      <a href="#" class="img-wrap"> 
+       <img src="{% static 'images/items/3.jpg' %}"> 
+      </a>
+      <div class="text-wrap p-3">
+        <a href="#" class="title">Vêtements d'été</a>
+        <span class="badge badge-danger"> -20% </span>
+      </div>
+   </figure>
+ </div> <!-- col.// -->
+ <div class="col-md col-6">
+   <figure class="card-product-grid card-sm">
+    <a href="#" class="img-wrap"> 
+     <img src="{% static 'images/items/4.jpg' %}"> 
+   </a>
+   <div class="text-wrap p-3">
+     <a href="#" class="title">Some category</a>
+     <span class="badge badge-danger"> -5% </span>
+   </div>
+ </figure>
+    </div> <!-- col.// -->
+    <div class="col-md col-6">
+     <figure class="card-product-grid card-sm">
+      <a href="#" class="img-wrap"> 
+       <img src="{% static 'images/items/5.jpg' %}"> 
+     </a>
+     <div class="text-wrap p-3">
+       <a href="#" class="title">Another category</a>
+       <span class="badge badge-danger"> -20% </span>
+     </div>
+    </figure>
+    </div> <!-- col.// -->
+    <div class="col-md col-6">
+     <figure class="card-product-grid card-sm">
+      <a href="#" class="img-wrap"> 
+       <img src="{% static 'images/items/6.jpg' %}"> 
+     </a>
+     <div class="text-wrap p-3">
+       <a href="#" class="title">Home apparel</a>
+       <span class="badge badge-danger"> -15% </span>
+     </div>
+    </figure>
+    </div> <!-- col.// -->
+    <div class="col-md col-6">
+     <figure class="card-product-grid card-sm">
+      <a href="#" class="img-wrap"> 
+       <img src="{% static 'images/items/7.jpg' %}"> 
+     </a>
+     <div class="text-wrap p-3">
+       <a href="#" class="title text-truncate">Smart watches</a>
+       <span class="badge badge-danger"> -10% </span>
+     </div>
+    </figure>
+    </div> <!-- col.// -->
+    </div>
+    </div>
+
+</section>
+<!-- =============== SECTION DEAL // END =============== -->
+
+
+
+{% for category in categories  %}
+    
+<!-- =============== SECTION 1 =============== -->
+<section class="padding-bottom">
+
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">{{ category.category_name|safe|capfirst }}</h4>
+    </header>
+
+    <div class="card card-home-category">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+        
+        <div class="home-category-banner bg-light-orange">
+            <h5 class="title">{{ category.overview|safe|capfirst }}</h5>
+            <p>{{ category.description|safe|truncatewords:20 }}</p>
+            <a href="{{ category.get_url }}" class="btn btn-outline-primary rounded-pill">Consulter</a>
+            <img src="{{ category.categories_image.url }}" class="img-bg">
         </div>
 
-    </div>
-    <!-- container //  -->
+        </div> <!-- col.// -->
+        <div class="col-md-9">
+                
+                <ul class="row no-gutters bordered-cols">
+
+                    {% for product in category.product_set.all|slice:":8" %}
+                            <li class="col-6 col-lg-3 col-md-4">
+                               <a href="{{ product.get_url }}" class="item"> 
+                                <div class="card-body">
+                                    <h6 class="title">{{ product.product_name|safe|capfirst }}</h6>
+                                    <img class="img-sm float-right" src="{{ product.photo.url }}"> 
+                                    <p class="text-muted"><i class="fa fa-map-marker-alt"></i>
+                                        {{ product.manufacturer }}
+                                    </p>
+                                </div>
+                               </a>
+                            </li>
+                    {% endfor %}
+
+               </ul>
+
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+    </div> <!-- card.// -->
 </section>
-<!-- ========================= SECTION MAIN END// ========================= -->
+<!-- =============== SECTION 1 END =============== -->
 
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
-    <div class="container">
-
-        <header class="section-heading">
-            <a href="{% url 'store:product' %}" class="btn btn-outline-primary float-right">Tout voir</a>
-            <h3 class="section-title">Les plus populaires</h3>
-        </header>
-        <!-- sect-heading -->
+{% endfor %}
 
 
-        <div class="row">
 
-            {% for product in product %}
+<!-- =============== SECTION REQUEST =============== -->
 
-            <div class="col-md-3">
-                <div class="card card-product-grid">
-                    <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.photo.url }}"> </a>
-                    <figcaption class="info-wrap">
-                        <a href="{{ product.get_url }}" class="title">{{ product.product_name|safe }}</a>
-                        <div class="price mt-1">{{ product.price|floatformat:2 }} GNF</div>
-                        <!-- price-wrap.// -->
-                    </figcaption>
+<section class="padding-bottom">
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Contactez-nous</h4>
+    </header>
+
+    <div class="row">
+        <div class="col-md-8">
+    <div class="card-banner banner-quote overlay-gradient" style="background-image: url('{% static 'images/banners/banner9.jpg' %}');">
+      <div class="card-img-overlay white">
+        <h3 class="card-title">Un moyen facile d'envoyer vos requêtes</h3>
+        <p class="card-text" style="max-width: 400px">Pour toutes vos demandes vous pouvez contacter notre équipe.</p>
+      </div>
+    </div>
+        </div> <!-- col // -->
+        <div class="col-md-4">
+
+    <div class="card card-body">
+        <h4 class="title py-3"></h4>
+        <form>
+            <div class="form-group">
+                <input class="form-control" name="" placeholder="Que voulez-vous chercher?" type="text">
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Quantite" name="" type="text">
+                    
+                    <select class="custom-select form-control">
+                        <option>Pieces</option>
+                        <option>Litres</option>
+                        <option>Tons</option>
+                        <option>Gramms</option>
+                    </select>
                 </div>
             </div>
-            <!-- col.// -->
-
-            {% endfor %}
-
-        </div>
-        <!-- row.// -->
-
+            <div class="form-group text-muted">
+                <p>Select template type:</p>
+                <label class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" value="option1">
+                   <span class="form-check-label">Request price</span>
+                </label>
+                <label class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" value="option2">
+                  <dspaniv class="form-check-label">Request a sample</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-warning">Request for quote</button>
+            </div>
+        </form>
     </div>
-    <!-- container // -->
+
+        </div> <!-- col // -->
+    </div> <!-- row // -->
 </section>
-<!-- ========================= SECTION  END// ========================= -->
+
+<!-- =============== SECTION REQUEST .//END =============== -->
+
+
+<!-- =============== SECTION ITEMS =============== -->
+<section  class="padding-bottom-sm">
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Articles recommandés</h4>
+    </header>
+
+    <div class="row row-sm">
+
+        {% for product in products %}
+            
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                <div class="card card-sm card-product-grid">
+                    <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.photo.url }}"> </a>
+                    <figcaption class="info-wrap">
+                        <a href="{{ product.get_url }}" class="title">{{ product.product_name|safe|capfirst }}</a>
+                        <div class="price mt-1">{{ product.price|floatformat:2 }} GNF</div> <!-- price-wrap.// -->
+                    </figcaption>
+                </div>
+            </div> <!-- col.// -->
+
+        {% endfor %}
+
+    </div> <!-- row.// -->
+</section>
+<!-- =============== SECTION ITEMS .//END =============== -->
+
+
+<!-- =============== SECTION SERVICES =============== -->
+<section  class="padding-bottom">
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Nos services</h4>
+    </header>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <article class="card card-post">
+              <img src="{% static 'images/posts/1.jpg' %}" class="card-img-top">
+              <div class="card-body">
+                <h6 class="title">Trade Assurance</h6>
+                <p class="small text-uppercase text-muted">Order protection</p>
+              </div>
+            </article> <!-- card.// -->
+        </div> <!-- col.// -->
+        <div class="col-md-3 col-sm-6">
+            <article class="card card-post">
+              <img src="{% static 'images/posts/2.jpg' %}" class="card-img-top">
+              <div class="card-body">
+                <h6 class="title">Pay anytime</h6>
+                <p class="small text-uppercase text-muted">Finance solution</p>
+              </div>
+            </article> <!-- card.// -->
+        </div> <!-- col.// -->
+        <div class="col-md-3 col-sm-6">
+            <article class="card card-post">
+              <img src="{% static 'images/posts/3.jpg' %}" class="card-img-top">
+              <div class="card-body">
+                <h6 class="title">Inspection solution</h6>
+                <p class="small text-uppercase text-muted">Easy Inspection</p>
+              </div>
+            </article> <!-- card.// -->
+        </div> <!-- col.// -->
+        <div class="col-md-3 col-sm-6">
+            <article class="card card-post">
+              <img src="{% static 'images/posts/4.jpg' %}" class="card-img-top">
+              <div class="card-body">
+                <h6 class="title">Ocean and Air Shipping</h6>
+                <p class="small text-uppercase text-muted">Logistic services</p>
+              </div>
+            </article> <!-- card.// -->
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+
+</section>
+<!-- =============== SECTION SERVICES .//END =============== -->
+
+<!-- =============== SECTION REGION =============== -->
+<section  class="padding-bottom">
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Votre region</h4>
+    </header>
+
+<ul class="row mt-4">
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/CN.png' %}"> <span>China</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/DE.png' %}"> <span>Germany</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/AU.png' %}"> <span>Australia</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/RU.png' %}"> <span>Russia</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/IN.png' %}"> <span>India</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/GB.png' %}"> <span>England</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/TR.png' %}"> <span>Turkey</span> </a></li>
+    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{% static 'images/icons/flags/UZ.png' %}"> <span>Uzbekistan</span> </a></li>
+
+</ul>
+</section>
+<!-- =============== SECTION REGION .//END =============== -->
+
+<article class="my-4">
+    <img src="{% static 'images/banners/ad-sm.png' %}" class="w-100">
+</article>
+</div>  
+<!-- container end.// -->
+
+
 
 {% endblock content %}

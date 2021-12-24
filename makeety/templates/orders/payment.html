@@ -1,0 +1,85 @@
+{% extends "base/base.html" %} 
+
+{% load static %} 
+
+{% load humanize %} 
+
+{% block title %} Finalisation de votre commande {% endblock title %}
+
+
+{% block content %}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+
+
+
+        <div class="row">
+            <aside class="col-lg-8">
+                <div class="card">
+                	<div class="card-header">Informations personnelles</div>
+                		<div class="card-body">
+                			
+                			<h5 class="card-title">Adresse de facturation</h5>
+
+                			<p class="card-text">{{ order.first_name|capfirst }} {{order.last_name|upper }} </p>
+                			<a href="#">lien</a>
+                		</div>
+                </div>
+                <div class="card">
+                	<div class="card-header">Moyen de paiement</div>
+                		<div class="card-body">
+                        <h5 class="card-title">card title</h5>
+            			<p class="card-text">text </p>
+            			<a href="#">lien</a>
+					</div>
+                </div>
+                
+                <div class="card">
+                	<div class="card-header">Revoir les articles</div>
+                		<div class="card-body">
+                        <h5 class="card-title">card title</h5>
+            			<p class="card-text">text </p>
+            			<a href="#">lien</a>
+					</div>
+                </div>
+                <!-- card.// -->
+            </aside>
+            <!-- col.// -->
+            <aside class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Prix total:</dt>
+                            <dd class="text-right"><small>{{ total|floatformat:2 }} GNF</small></dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Taxe:</dt>
+                            <dd class="text-right"><small> {{ tax|floatformat:2 }}%</small></dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total:</dt>
+                            <dd class="text-right text-dark b"><strong><small>{{ grand_total|floatformat:2 }} GNF</small></strong></dd>
+                        </dl>
+                        <hr>
+                        <p class="text-center mb-3">
+                            <img src="{% static 'images/misc/payments.png' %}" height="26">
+                        </p>
+                        <a href="{% url 'carts:checkout' %}" class="btn btn-primary btn-block">Payer</a>
+  
+                    </div>
+                    <!-- card-body.// -->
+                </div>
+                <!-- card.// -->
+            </aside>
+            <!-- col.// -->
+        </div>
+        <!-- row.// -->
+
+
+
+    </div>
+    <!-- container .//  -->
+</section>
+
+{% endblock content %}

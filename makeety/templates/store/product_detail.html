@@ -17,7 +17,7 @@
                 <aside class="col-md-6">
                     <article class="gallery-wrap">
                         <div class="img-big-wrap">
-                            <a href="#"><img src="{{ product_detail.photo.url }}"></a>
+                            <a href="{% url 'store:product' %}"><img src="{{ product_detail.photo.url }}"></a>
                         </div>
                         <!-- img-big-wrap.// -->
                     </article>
@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="item-option-select">
                                     <h6>Couleur</h6>
-                                    <select name="color" id="" class="form-control" required>
+                                    <select name="couleur" id="" class="form-control" required>
                                         <option value="" disabled selected>--couleur--</option>
                                         {% for i in product_detail.variation_set.colors %}
                                           
@@ -58,7 +58,7 @@
                             <div class="row">
                                 <div class="item-option-select">
                                     <h6>Taille</h6>
-                                    <select name="size" id="" class="form-control" required="required">
+                                    <select name="taille" id="" class="form-control" required="required">
                                         <option value="" disabled selected>--taille--</option>
                                         {% for i in product_detail.variation_set.sizes %}
                                           

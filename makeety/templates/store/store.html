@@ -1,243 +1,322 @@
-{% extends "base/base.html" %} {% load static %} {% block title %} Store {% endblock title %} {% block content %}
+{% extends "base/base.html" %} 
+{% load static %} 
+
+{% block title %} Store {% endblock title %} 
 
 
-<!-- ========================= SECTION PAGETOP ========================= -->
-<section class="section-pagetop bg">
-    <div class="container">
 
-        {% if 'search' in request.path %}
-        <!-- <h2 class="title-page text-center">Resultat de recherche</h2> -->
-        {% else %}
+{% block content %}
 
-        <h2 class="title-page">Store</h2>
-
-        {% endif %}
-    </div>
-    <!-- container //  -->
-</section>
-<!-- ========================= SECTION INTRO END// ========================= -->
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content padding-y">
-    <div class="container">
+ <div class="container">
 
-        <div class="row">
-            <aside class="col-md-3">
+    <div class="row">
+        <aside class="col-md-2">
+        <form action="" method="POST">
+        {% csrf_token %}
+        
+        <article class="filter-group">
+            <h6 class="title">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_1">Categorie</a>
+            </h6>
+            <div class="filter-content collapse show" id="collapse_1">
+                <div class="inner">
+                    <ul class="list-menu">
+                        <li><a
+                        {% if 'store' in request.path %}
+                             class="active"
+                             
+                         {% endif %} href="{% url 'store:product' %}">Tous les articles</a></li>
+                        {% for categorie in category_links %}
+                            
+                        <li><a href="{{ categorie.get_url }}">{{ categorie.category_name|safe|capfirst }}  </a></li>
 
-                <div class="card">
-                    <article class="filter-group">
-                        <header class="card-header">
-                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-                                <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Categories</h6>
-                            </a>
-                        </header>
-                        <div class="filter-content collapse show" id="collapse_1" style="">
-                            <div class="card-body">
+                        {% endfor %}
 
-                                <ul class="list-menu">
-                                    <li><a href="{% url 'store:product' %}">Tous les articles  </a></li>
-
-                                    {% for categorie in category_links %}
-                                    <li><a href="{{ categorie.get_url }}">{{ categorie.category_name }}  </a></li>
-                                    {% endfor %}
-
-                                </ul>
-
-                            </div>
-                            <!-- card-body.// -->
-                        </div>
-                    </article>
-                    <!-- filter-group  .// -->
-                    <article class="filter-group">
-                        <header class="card-header">
-                            <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-                                <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Taille </h6>
-                            </a>
-                        </header>
-                        <div class="filter-content collapse show" id="collapse_4" style="">
-                            <div class="card-body">
-                                <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> XS </span>
-			  </label>
-
-                                <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> SM </span>
-			  </label>
-
-                                <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> LG </span>
-			  </label>
-
-                                <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> XXL </span>
-			  </label>
-                            </div>
-                            <!-- card-body.// -->
-                        </div>
-                    </article>
-                    <!-- filter-group .// -->
-
-                    <article class="filter-group">
-                        <header class="card-header">
-                            <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
-                                <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Prix </h6>
-                            </a>
-                        </header>
-                        <div class="filter-content collapse show" id="collapse_3" style="">
-                            <div class="card-body">
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>Min</label>
-                                        <!-- <input class="form-control" placeholder="$0" type="number"> -->
-                                        <select class="mr-2 form-control">
-						<option value="0">$0</option>
-						<option value="50">$50</option>
-						<option value="100">$100</option>
-						<option value="150">$150</option>
-						<option value="200">$200</option>
-						<option value="500">$500</option>
-						<option value="1000">$1000</option>
-					</select>
-                                    </div>
-                                    <div class="form-group text-right col-md-6">
-                                        <label>Max</label>
-                                        <select class="mr-2 form-control">
-						<option value="50">$50</option>
-						<option value="100">$100</option>
-						<option value="150">$150</option>
-						<option value="200">$200</option>
-						<option value="500">$500</option>
-						<option value="1000">$1000</option>
-						<option value="2000">$2000+</option>
-					</select>
-                                    </div>
-                                </div>
-                                <!-- form-row.// -->
-                                <button class="btn btn-block btn-primary">Appliquer</button>
-                            </div>
-                            <!-- card-body.// -->
-                        </div>
-                    </article>
-                    <!-- filter-group .// -->
-
-                </div>
-                <!-- card.// -->
-
-            </aside>
-            <!-- col.// -->
-            <main class="col-md-9">
-
-                <header class="border-bottom mb-4 pb-3">
-                    <div class="form-inline">
-                        <span class="mr-md-auto">
-
-				{% if available_product %}
-					
-				<strong>{{product_count}}</strong> 
-				article{{ product_count|pluralize }} 
-				trouvé{{product_count|pluralize}}
-
-				{% else %}
-					
-				{% endif %}
-
-			</span>
-                    </div>
-                </header>
-                <!-- sect-heading -->
-
-                <div class="row">
-
-                    {% if available_product %} {% for product in available_product %}
-
-
-                    <div class="col-md-4">
-                        <figure class="card card-product-grid">
-                            <div class="img-wrap">
-
-                                <a href="{{ product.get_url }}">
-                                    <img src="{{ product.photo.url }}">
-                                </a>
-
-                            </div>
-                            <!-- img-wrap.// -->
-                            <figcaption class="info-wrap">
-                                <div class="fix-height">
-                                    <a href="{{ product.get_url }}" class="title">{{ product.product_name|safe }}</a>
-                                    <div class="price-wrap mt-2">
-                                        <span class="price">{{ product.price|floatformat:2 }} GNF</span>
-                                    </div>
-                                    <!-- price-wrap.// -->
-                                </div>
-                                <a href="{{ product.get_url }}" class="btn btn-block btn-primary">Details  <i class="fas fa-eye"></i></a>
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <!-- col.// -->
-
-                    {% endfor %} {% else %}
-
-                    <div class="container">
-
-                        <h2 class="text-center">Aucun article trouvé</h2>
-                    </div>
-
-                    {% endif %}
-                </div>
-                <!-- row end.// -->
-
-
-                <nav class="mt-4" aria-label="Page navigation sample">
-
-                    {% if available_product.has_other_pages %}
-
-                    <ul class="pagination">
-
-                        <!-- page precedente -->
-                        {% if available_product.has_previous %}
-                        <li class="page-item "><a class="page-link" href="?page={{ available_product.previous_page_number }}">&laquo;</a></li>
-                        {% else %}
-                        <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                        {% endif %}
-                        <!-- fin de la page precedente -->
-
-                        <!-- page courante -->
-                        {% for i in available_product.paginator.page_range %} {% if available_product.number == i %}
-                        <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
-                        {% else %}
-                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %} {% endfor %}
-                        <!-- fin de la page courante -->
-
-                        <!-- page suivante -->
-                        {% if available_product.has_next %}
-                        <li class="page-item "><a class="page-link" href="?page={{ available_product.next_page_number }}">&raquo;</a></li>
-                        {% else %}
-                        <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-                        {% endif %}
-                        <!-- fin de la page suivante -->
                     </ul>
+                </div> <!-- inner.// -->
+            </div>
+        </article> <!-- filter-group  .// -->
 
-                    {% endif %}
+        <article class="filter-group">
+            <h6 class="title">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_2"> Marque </a>
+            </h6>
+            <div class="filter-content collapse show" id="collapse_2">
+                <div class="inner">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" checked="" class="custom-control-input">
+                      <div class="custom-control-label">Adidas  
+                        <b class="badge badge-pill badge-light float-right">120</b>  </div>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" checked="" class="custom-control-input">
+                      <div class="custom-control-label">Nike 
+                        <b class="badge badge-pill badge-light float-right">15</b>  </div>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" checked="" class="custom-control-input">
+                      <div class="custom-control-label">The Noth Face 
+                        <b class="badge badge-pill badge-light float-right">35</b> </div>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" checked="" class="custom-control-input">
+                      <div class="custom-control-label">The cat 
+                        <b class="badge badge-pill badge-light float-right">89</b> </div>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input">
+                      <div class="custom-control-label">Honda 
+                        <b class="badge badge-pill badge-light float-right">30</b>  </div>
+                    </label>
+                </div> <!-- inner.// -->
+            </div>
+        </article> <!-- filter-group .// -->
 
-                </nav>
+        <article class="filter-group">
+            <h6 class="title">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_4"> Taille </a>
+            </h6>
+            <div class="filter-content collapse show" id="collapse_4">
+                  <div class="inner">
+                    <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> XS </span>
+                      </label>
 
-            </main>
-            <!-- col.// -->
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> SM </span>
+                      </label>
+
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> LG </span>
+                      </label>
+
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> XXL </span>
+                      </label>
+                  </div> <!-- inner.// -->
+            </div>
+        </article> <!-- filter-group .// -->
+
+        <article class="filter-group">
+            <h6 class="title">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_5"> Condition </a>
+            </h6>
+            <div class="filter-content collapse show" id="collapse_5">
+                <div class="inner">
+
+
+                    <label class="custom-control custom-radio">
+                      <input type="radio" name="myfilter_radio" class="custom-control-input">
+                      <div class="custom-control-label">Nouveauté </div>
+                    </label>
+
+                    <label class="custom-control custom-radio">
+                      <input type="radio" name="myfilter_radio" class="custom-control-input">
+                      <div class="custom-control-label">Usagé</div>
+                    </label>
+
+                    <label class="custom-control custom-radio">
+                      <input type="radio" name="myfilter_radio" class="custom-control-input">
+                      <div class="custom-control-label">Vetusté</div>
+                    </label>
+                </div> <!-- inner.// -->
+            </div>
+        </article> <!-- filter-group .// -->
+        
+        <article class="filter-group">
+            <h6 class="title">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_3"> Prix </a>
+            </h6>
+            <div class="filter-content collapse show" id="collapse_3">
+                <div class="inner">
+                    <input type="range" class="custom-range" min="0" max="100" name="">
+                    <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Min</label>
+                      <input class="form-control" placeholder="$0" type="number">
+                    </div>
+                    <div class="form-group text-right col-md-6">
+                      <label>Max</label>
+                      <input class="form-control" placeholder="$1,0000" type="number">
+                    </div>
+                    </div> <!-- form-row.// -->
+                    <button class="btn btn-block btn-primary">Appliquer</button>
+                </div> <!-- inner.// -->
+            </div>
+        </article> <!-- filter-group .// -->
+
+
+        </form>
+        </aside> <!-- col.// -->
+        <main class="col-md-10">
+
+
+    <header class="mb-3">
+            <div class="form-inline">
+
+                {% if available_product %}
+                <strong class="mr-md-auto">{{product_count}}
+                article{{ product_count|pluralize }} 
+                disponible{{product_count|pluralize}}
+                </strong> 
+
+                {% else %}
+                    
+
+                    
+                {% endif %}
+            </div>
+    </header><!-- sect-heading -->
+
+    {% if available_product  %}
+    
+
+        {% for product in available_product %}
+            
+        <article class="card card-product-list">
+            <div class="row no-gutters">
+                <aside class="col-md-3">
+                    <a href="{{ product.get_url }}" class="img-wrap">
+                        {% if product.condition == "Nouveau" %}
+                        
+                            <span class="badge badge-success">
+                                {{product.condition}}
+                            </span>
+
+                        {% elif "En solde" in product.condition  %}
+                            <span class="badge badge-danger">
+                                {{product.condition}}
+                            </span>
+
+                        {% else %}
+                            
+                        {% endif %}
+
+                        <img src="{{ product.photo.url }}">
+                    </a>
+                </aside> <!-- col.// -->
+                <div class="col-md-6">
+                    <div class="info-main">
+                        <a href="{{ product.get_url }}" class="h5 title">{{ product.product_name|safe|capfirst }}</a>
+                        <div class="rating-wrap mb-2">
+                            <ul class="rating-stars">
+                                <li style="width:100%" class="stars-active"> 
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> 
+                                </li>
+                                <li>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> 
+                                </li>
+                            </ul>
+                            <div class="label-rating">9/10</div>
+                        </div> <!-- rating-wrap.// -->
+                    
+                        <p class="mb-3">
+                            <span class="tag"> <i class="fa fa-check"></i> Verified</span> 
+                            <span class="tag"> {{ product.year }}</span> 
+                            <span class="tag"> 80 reviews </span>
+                            <span class="tag"> {{product.manufacturer}} </span>
+                        </p>
+
+                        <p> {{ product.description|safe }} </p>
+
+                    </div> <!-- info-main.// -->
+                </div> <!-- col.// -->
+                <aside class="col-sm-3">
+                    <div class="info-aside">
+                        <div class="price-wrap">
+                            <span class="h5 price">{{ product.price|floatformat:2 }} GNF</span> 
+                            <!-- <small class="text-muted">/unité</small> -->
+                        </div> <!-- price-wrap.// -->
+                        <small class="text-success">
+                            {% if product.free_shipping %}
+                                Livraison gratuite
+                            {% endif %}
+                        </small>
+                        
+                        {# <p class="text-muted mt-3">Grand textile Co</p> #}
+                        <p class="mt-3">
+                            <a href="{{ product.get_url }}" class="btn btn-outline-primary"> <i class="fas fa-eye"></i> Voir </a>
+                            <!-- <a href="#" class="btn btn-light"><i class="fa fa-heart"></i> Save </a> -->
+                        </p>
+    <!-- 
+                        <label class="custom-control mt-3 custom-checkbox">
+                              <input type="checkbox" class="custom-control-input">
+                              <div class="custom-control-label">Add to compare
+                          </div>
+                        </label> -->
+
+                    </div> <!-- info-aside.// -->
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+        </article> <!-- card-product .// -->
+
+        {% endfor %}
+
+
+        <nav class="mb-4" aria-label="Page navigation sample">
+            {% if available_product.has_other_pages %}
+            <ul class="pagination">
+                <!-- page precedente -->
+                {% if available_product.has_previous %}
+                <li class="page-item "><a class="page-link" href="?page={{ available_product.previous_page_number }}">&laquo;</a></li>
+                {% endif %}
+                <!-- fin de la page precedente -->
+
+                <!-- page courante -->
+                {% for i in available_product.paginator.page_range %} {% if available_product.number == i %}
+                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %} {% endfor %}
+                <!-- fin de la page courante -->
+
+                <!-- page suivante -->
+                {% if available_product.has_next %}
+                <li class="page-item "><a class="page-link" href="?page={{ available_product.next_page_number }}">&raquo;</a></li>
+                {% endif %}
+                <!-- fin de la page suivante -->
+            </ul>
+            {% endif %}
+        </nav>
+
+
+        <div class="box text-center">
+            <p>Avez-vous trouvé ce que vous chercher？</p>
+            <a href="" class="btn btn-light">Oui</a>
+            <a href="" class="btn btn-light">Non</a>
         </div>
 
+
+    {% else %}
+
+        <div class="container mx-auto mt-12 padding-y" style="mr-md-auto">
+        <h2 class="text-center">Aucun resultat trouvé</h2>
+        </div>
+        
+    {% endif %}
+
+
+
+        </main> <!-- col.// -->
+
     </div>
-    <!-- container .//  -->
+
+    </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
+
 
 
 {% endblock content %}

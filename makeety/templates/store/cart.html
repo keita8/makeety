@@ -4,7 +4,7 @@
 
 {% load humanize %} 
 
-{% block title %} panier {% endblock title %}
+{% block title %} Votre panier {% endblock title %}
 
 
 {% block content %}
@@ -12,18 +12,15 @@
 <section class="section-content padding-y bg">
     <div class="container">
 
-        {% if not cart_items %}
-        <div class="text-center ">
-            <h2 class="text-center">Votre panier est vide.</h2>
-            <br>
-            <a href="{% url 'store:product' %}" class="btn btn-outline-primary">Continer votre shopping <i class="fas fa-shopping-cart"></i> </a>
-        </div>
-        {% else %}
 
+
+        {% if cart_items %}
 
         <div class="row">
             <aside class="col-lg-9">
                 <div class="card">
+                    <div class="table-responsive">
+                        
                     <table class="table table-borderless table-shopping-cart">
                         <thead class="text-muted">
                             <tr class="small text-uppercase">
@@ -101,6 +98,9 @@
 
                         </tbody>
                     </table>
+
+                    </div>
+
                 </div>
                 <!-- card.// -->
             </aside>
@@ -136,6 +136,23 @@
         <!-- row.// -->
 
 
+        {% else %}
+
+
+        <section class="section-content padding-y bg"> 
+
+        <div class="container">
+            
+        <h2 class="text-center">Votre panier est vide.</h2>
+        <br>
+
+        <div class="text-center">
+            <a href="{% url 'store:product' %}" class="btn btn-primary">Continuer l'achat</a>
+        </div>
+            
+        </div>
+        
+        </section>
         {% endif %}
 
 

@@ -39,12 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'phonenumber_field',
-     'phonenumbers',
     'categorie',
     'accounts',
     'store',
     'carts',
+    'orders',
 
 ]
 

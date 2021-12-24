@@ -19,7 +19,7 @@
 <div class="card">
   <div class="card-body">
     <h4 class="card-title mb-4">Adresse de facturation</h4>
-    <form action="{% url 'carts:checkout' %}" method="POST">
+    <form action="{% url 'orders:place_orders' %}" method="POST">
       {% csrf_token %}
       <div class="form-row">
         <div class="col form-group">
@@ -53,16 +53,16 @@
       </div>
       <div class="form-row">
         <div class="col form-group">
-          <label for="city">Ville</label>
-          <input type="text" id="city" name="ville" class="form-control" required placeholder="Ville">
+          <label for="country">Pays</label>
+          <input type="text" id="country" name="country" class="form-control" required placeholder="Pays">
         </div>
         <div class="col form-group">
           <label for="">Commune</label>
-          <input type="text" name="commune" class="form-control" required placeholder="Commune">
+          <input type="text" name="state" class="form-control" required placeholder="Commune">
         </div>
         <div class="col form-group">
           <label for="">Quartier</label>
-          <input type="text" name="quartier" class="form-control" required placeholder="Quartier">
+          <input type="text" name="city" class="form-control" required placeholder="Quartier">
         </div>
       </div>
         <div class="form-row">
@@ -77,8 +77,11 @@
     </aside> <!-- col.// -->
     <aside class="col-lg-6">
 
-        <div class="card">
-        <div class="card-body">
+                        
+    <div class="card">
+      <div class="card-body">
+   <div class="table-responsive">
+
       <table class="table table-borderless table-shopping-cart">
       <thead class="text-muted">
       <tr class="small text-uppercase">
@@ -113,8 +116,8 @@
         </td>
         <td>
             <div class="price-wrap">
-                <var class="price">{{ cart_item.sub_total }} GNF</var>
-                <small class="text-muted"> {{ cart_item.product.price }} GNF unité </small>
+                <var class="price">{{ cart_item.sub_total|floatformat:2 }} GNF</var>
+                <small class="text-muted"> {{ cart_item.product.price|floatformat:2 }} GNF unité </small>
             </div> <!-- price-wrap .// -->
         </td>
 
@@ -123,7 +126,7 @@
 
       </tbody>
       </table>
-
+    </div>
       <button type="submit" name="submit" class="btn btn-primary btn-block">Passer à la caisse</button>
             <a href="{% url 'store:product' %}" class="btn btn-light btn-block">Continuer votre Shopping</a>
       </form>

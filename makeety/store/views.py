@@ -17,14 +17,14 @@ def store(request, category_slug=None):
 	if category_slug != None:
 		category = get_object_or_404(Category, slug = category_slug)
 		product  = Product.objects.filter(category=category, is_available=True)
-		paginator = Paginator(product, 6) # afficher 6 articles par page
+		paginator = Paginator(product, 5) # afficher 6 articles par page
 		page = request.GET.get('page')
 		paged_products = paginator.get_page(page)
 		product_count = product.count()
 
 	else:
 		product = Product.objects.all().filter(is_available=True).order_by('id')
-		paginator = Paginator(product, 6) # afficher 6 articles par page
+		paginator = Paginator(product, 5) # afficher 6 articles par page
 		page = request.GET.get('page')
 		paged_products = paginator.get_page(page)
 		product_count     = product.count()
@@ -64,6 +64,7 @@ def product_detail(request, category_slug, product_slug):
 def search(request):
 
 	product = None
+	product_count = 0
 
 	if 'keyword' in request.GET:
 		keyword = request.GET['keyword']

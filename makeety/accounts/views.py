@@ -117,7 +117,7 @@ def login(request):
                     pass
 
                 auth.login(request, user)
-                messages.info(request, f'Nous sommes ravis de vous revoir {user.first_name} ')
+                # messages.info(request, f'Nous sommes ravis de vous revoir {user.first_name} ')
                 url = request.META.get('HTTP_REFERER')
                 try:
                     query = requests.utils.urlparse(url).query
