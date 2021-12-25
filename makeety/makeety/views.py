@@ -9,9 +9,9 @@ def homepage(request):
 	categories = Category.objects.filter(is_available=True)[:3]
 
 	# print([x for x in categories])
-	for cat in categories:
-		for product in cat.product_set.all():
-			print(product.product_name)
+	# for cat in categories:
+	# 	for product in cat.product_set.all():
+	# 		print(product.product_name)
 
 
 

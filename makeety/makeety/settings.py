@@ -164,6 +164,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ansoumanekeita825@gmail.com'
 DEFAULT_FROM_EMAIL = 'ansoumanekeita825@gmail.com'
-EMAIL_HOST_PASSWORD = 'vucjon-bavrY8-kovbuw'
+EMAIL_HOST_PASSWORD = 'xejwoq-bigjU3-fikpyd'
 EMAIL_USE_TLS = True
 
